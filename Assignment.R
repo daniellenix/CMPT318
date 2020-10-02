@@ -1,6 +1,10 @@
+library(ggplot2)
+library(corrplot)
 
 #PARSE DATA
 print("reading data...")
+#getwd()
+#setwd("C:/dnix/Year 3/Fall 2020/Cmpt 318/")
 data <- read.table("data.txt", header = FALSE, sep = ",", skip=10080*16 + 1, nrows=10080)
 
 #FUNCTIONS
@@ -45,3 +49,8 @@ C_weekday_max <- max(data[7*60:19*6, 5], na.rm=TRUE)
 C_weekend_min <- min(data[19*6 + 1:24*60, 5], na.rm=TRUE)
 C_weekend_max <- max(data[19*6 + 1:24*60, 5], na.rm=TRUE)
 
+
+cor_data <- data[complete.cases(data), 3:9]
+res <- cor(cor_data, method = "pearson")
+round(res, 2)
+corrplot(res, method = "circle")
